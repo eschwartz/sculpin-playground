@@ -1,0 +1,22 @@
+{
+    "name": "eschwartz/sculpin-playground",
+    "description": "Just playin' with Sculpin",
+    "authors": [
+        {
+            "name": "Edan Schwartz",
+            "email": "edanschwartz@gmail.com"
+        }
+    ],
+    "require": {
+        "sculpin/sculpin": "~2.0",
+
+        "dflydev/embedded-composer-console": "@dev",
+        "dflydev/embedded-composer-core": "@dev",
+        "composer/composer": "@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "ESchwartz\\": "app"
+        }
+    }
+}

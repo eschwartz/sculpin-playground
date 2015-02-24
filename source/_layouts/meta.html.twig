@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>{% block title %}{{ page.title }}{% endblock %}</title>
+
+  {% block html_meta %}{% endblock %}
+  {% block stylesheets %}{% endblock %}
+</head>
+<body>
+
+{% block content_before %}{% endblock %}
+
+{% block content %}
+  <h3>Failed to load content</h3>
+{% endblock %}
+
+{% block content_after %}{% endblock %}
+
+{% block scripts %}{% endblock %}
+
+</body>
+</html>
