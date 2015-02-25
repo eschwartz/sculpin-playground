@@ -1,0 +1,1 @@
+**Sculpin generator complains if there aren't any posts....**

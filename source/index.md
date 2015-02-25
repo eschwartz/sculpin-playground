@@ -1,6 +1,6 @@
 ---
 title: My First Sculpin Page
-template: static-content
+layout: static-content
 ---
 
 # Hello World
