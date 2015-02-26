@@ -38,7 +38,7 @@ if [[ $TRAVIS == true ]]; then
   aws s3 sync ./output_$DEPLOY_ENV $s3Path
 else
   echo "\nusing $awsProfile AWS profile";
-  echo "aws s3 sync ./output_$DEPLOY_ENV $s3Path --profile $awsProfile"
+  aws s3 sync ./output_$DEPLOY_ENV $s3Path --profile $awsProfile
 fi
 
 echo "\n"
