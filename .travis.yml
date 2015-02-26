@@ -1,0 +1,20 @@
+language: php
+php:
+- 5.5
+install:
+- ./composer install
+- if [[ "$TRAVIS_BRANCH" == "master" ]] || [[ "$TRAVIS_BRANCH" == "staging" ]]; then
+  sudo pip install awscli; fi
+script:
+- if [[ "$TRAVIS_BRANCH" == "master" ]]; then ./sculpin generate --env=prod; fi
+- if [[ "$TRAVIS_BRANCH" == "staging" ]]; then ./sculpin generate --env=staging; fi
+after_success:
+- if [[ "$TRAVIS_BRANCH" == "master" ]]; then aws s3 sync ./output_prod s3://sculpin-playground
+  --profile eschwartz; fi
+- if [[ "$TRAVIS_BRANCH" == "staging" ]]; then aws s3 sync ./output_dev s3://sculpin-playground
+  --profile eschwartz; fi
+env:
+  global:
+  # AWS keys (encrypted)
+  - secure: Y9SpHQkQXGHvQelzMfzNODU+hGkoStDfADnUQ11WlGNHdKA1sAy2xRg7Y/lAaqcIT1aF7EPk4G1nRFDPR8RLEJCGMEhKsXta0zuKq+yKJQX2TwnPzTeIVej9CJxkiFWeLIHmP8WQm5b/HEpE3g1UBWjibUI00HSUCZMeU/MSxnI=
+  - secure: GjJAAhmwKpQPVH801yud08z9IaH5cAGkL4Dp0wFDD186olr0bgX+UIeK+nTLugl9DmyGIYfWnWMQSMXoUqAEj/Phm2ddOgYTIca8LkmDrwr7XBRIU0SPTrtHbRnpw3bpkAxuOIdasrinsB17VQe346DPZEkCbl53bVRnhRW1PSI=
