@@ -11,7 +11,7 @@ fi
 echo "Generating Sculpin content for $DEPLOY_ENV environment."
 
 # Generate content
-rm -r output_$DEPLOY_ENV
+rm -rf output_$DEPLOY_ENV
 ./sculpin generate --env=$DEPLOY_ENV
 
 echo "\nContent generation successful."
