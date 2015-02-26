@@ -5,12 +5,12 @@ install:
 - ./composer install
 - sudo pip install awscli
 script:
-- sh ./scripts/deploy-s3.sh $TRAVIS_BRANCH $GITHUB_USER $GITHUB_PASS
+- sh ./scripts/deploy-s3.sh $TRAVIS_BRANCH $GITHUB_USER $GITHUB_PASSWORD
 env:
   global:
   # AWS keys (encrypted)
   - secure: Y9SpHQkQXGHvQelzMfzNODU+hGkoStDfADnUQ11WlGNHdKA1sAy2xRg7Y/lAaqcIT1aF7EPk4G1nRFDPR8RLEJCGMEhKsXta0zuKq+yKJQX2TwnPzTeIVej9CJxkiFWeLIHmP8WQm5b/HEpE3g1UBWjibUI00HSUCZMeU/MSxnI=
   - secure: GjJAAhmwKpQPVH801yud08z9IaH5cAGkL4Dp0wFDD186olr0bgX+UIeK+nTLugl9DmyGIYfWnWMQSMXoUqAEj/Phm2ddOgYTIca8LkmDrwr7XBRIU0SPTrtHbRnpw3bpkAxuOIdasrinsB17VQe346DPZEkCbl53bVRnhRW1PSI=
-  # Github creds (GITHUB_USER, GITHUB_PASS)
+  # Github creds (GITHUB_USER, GITHUB_PASSWORD)
   - secure: HwLupp9GxldZ2EIbxUUNjM24AwlSquwU4QUj6s5MA+5qoRdS55x5xWbtA4D3d3UlkH9sJiLqcdHtMeOMDW6CJ5Zu2z8HTNmRdHhvyMkuMsp0A6hdzCJcOABs4bv3bier/cJ/ZDtEPhWc9Z5oGK9xr8/Ln8B4NGHm2imvqOQ7Y1Q=
   - secure: UR1KlWiWVXeahY/UF6cP+63DATVEEaFZG/cQ0dNFp+j43t4zCgfdEk+q/Tb4Xr3Q4P+2niV332QBGVuEfi1AYLRhkked41zqctnnYZSYugjX3StRRXCmnEwFrLV8k87QfZuWd6yBasEd5pgDd417Kz0+QiMz9aYfaBG2TYM6VFQ=
