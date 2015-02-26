@@ -3,10 +3,9 @@ php:
 - 5.5
 install:
 - ./composer install
-- if [[ "$TRAVIS_BRANCH" == "master" ]] || [[ "$TRAVIS_BRANCH" == "staging" ]]; then
-  sudo pip install awscli; fi
+- sudo pip install awscli; fi
 script:
-- ./scripts/deploy-s3.sh
+- ./scripts/deploy-s3.sh $TRAVIS_BRANCH
 env:
   global:
   # AWS keys (encrypted)
