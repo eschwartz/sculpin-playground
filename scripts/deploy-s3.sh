@@ -30,7 +30,7 @@ eval `sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
    < $CONFIG_FILE \
     | sed -n -e "/^\[$SECTION\]/,/^\s*\[/{/^[^;].*\=.*/p;}"`
 
-if [-z "$s3Path"]; then
+if [ -z "$s3Path" ]; then
   echo "Unable to determine s3 path for env $DEPLOY_ENV.";
   exit 1
 fi
