@@ -5,8 +5,7 @@ install:
 - ./composer install
 - sudo pip install awscli
 script:
-- echo "Travis branch env: $TRAVIS_BRANCH"
-- ./scripts/deploy-s3.sh $TRAVIS_BRANCH
+- sh ./scripts/deploy-s3.sh $TRAVIS_BRANCH
 env:
   global:
   # AWS keys (encrypted)
