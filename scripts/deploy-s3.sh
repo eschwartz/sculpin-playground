@@ -1,13 +1,15 @@
 #!/bin/sh
 # From https://github.com/rudimeier/bash_ini_parser
 
-if [[ "$1" != "" ]]; then
-  DEPLOY_ENV=$1
-elif [[ "$TRAVIS_BRANCH" != "" ]]; then
-  DEPLOY_ENV=$TRAVIS_BRANCH
+if [ -z "$1" ]; then
+  if [ "$TRAVIS_BRANCH" != "" ]; then
+    DEPLOY_ENV=$TRAVIS_BRANCH
+  else
+    echo "Unable to determine deploy environment"
+    exit 1
+  fi
 else
-  echo "Unable to determine deploy environment"
-  exit 1
+  DEPLOY_ENV=$1
 fi
 
 echo "Generating Sculpin content for $DEPLOY_ENV environment."
