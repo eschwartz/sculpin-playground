@@ -2,14 +2,10 @@
 # From https://github.com/rudimeier/bash_ini_parser
 
 if [ -z "$1" ]; then
-  if [ "$TRAVIS_BRANCH" != "" ]; then
-    DEPLOY_ENV=$TRAVIS_BRANCH
-  else
-    echo "Unable to determine deploy environment"
-    exit 1
-  fi
+  echo "Unable to determine deploy environment"
+  exit 1
 else
-  DEPLOY_ENV=$1
+   DEPLOY_ENV=$1
 fi
 
 echo "Generating Sculpin content for $DEPLOY_ENV environment."
@@ -34,16 +30,13 @@ eval `sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
    < $CONFIG_FILE \
     | sed -n -e "/^\[$SECTION\]/,/^\s*\[/{/^[^;].*\=.*/p;}"`
 
-echo "Deploying to $s3Path";
-
-if [[ $TRAVIS == true ]]; then
-  aws s3 sync ./output_$DEPLOY_ENV $s3Path
-else
-  echo "\nusing $awsProfile AWS profile";
-  aws s3 sync ./output_$DEPLOY_ENV $s3Path --profile $awsProfile
+if [-z "$s3Path"]; then
+  echo "Unable to determine s3 path for env $DEPLOY_ENV.";
+  exit 1
 fi
 
-echo "\n"
-echo "Deployment successful."
+echo "Deploying to $s3Path";
+aws s3 sync ./output_$DEPLOY_ENV $s3Path
 
+echo "\nDeployment successful."
 exit 0;
