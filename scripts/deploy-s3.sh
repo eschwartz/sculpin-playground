@@ -1,20 +1,24 @@
 #!/bin/sh
-# From https://github.com/rudimeier/bash_ini_parser
 
 if [ -z "$1" ]; then
-  echo "Unable to determine deploy environment"
+  echo "Missing deploy env (arg 1)"
   exit 1
 else
    DEPLOY_ENV=$1
 fi
+if [ -z "$2" ]; then
+  echo "Missing Github username (arg 2)."
+  exit 1
+else
+  GITHUB_USER=$2
+fi
+if [ -z "$3" ]; then
+  echo "Missing Github password (arg 3)."
+  exit 1
+else
+  GITHUB_PASS=$3;
+fi
 
-echo "Generating Sculpin content for $DEPLOY_ENV environment."
-
-# Generate content
-rm -rf output_$DEPLOY_ENV
-./sculpin generate --env=$DEPLOY_ENV
-
-echo "\nContent generation successful."
 
 
 # Deploy to s3
@@ -29,6 +33,28 @@ eval `sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
     -e "s/^\(.*\)=\([^\"']*\)$/\1=\"\2\"/" \
    < $CONFIG_FILE \
     | sed -n -e "/^\[$SECTION\]/,/^\s*\[/{/^[^;].*\=.*/p;}"`
+
+# Clone content repo
+echo "\nCloning content repo $contentRepo (branch $DEPLOY_ENV) into tmp_source_repo"
+eval `git clone \
+  --depth 1 \
+  --branch $DEPLOY_ENV \
+  https://${GITHUB_USER}:${GITHUB_PASS}@github.com/${contentRepo} \
+  tmp_source_repo`
+
+echo "Copying sources into repo."
+cp -R tmp_source_repo/source/* ./source
+
+
+echo "Generating Sculpin content for $DEPLOY_ENV environment."
+
+# Generate content
+rm -rf output_$DEPLOY_ENV
+./sculpin generate --env=$DEPLOY_ENV
+
+echo "\nContent generation successful."
+
+
 
 if [ -z "$s3Path" ]; then
   echo "Unable to determine s3 path for env $DEPLOY_ENV.";

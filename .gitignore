@@ -6,3 +6,6 @@
 .settings
 vendor/*
 output_*/
+source/
+!source/themes
+tmp_source_repo/
